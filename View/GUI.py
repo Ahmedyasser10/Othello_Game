@@ -104,11 +104,11 @@ class GUI:
                 x, y = pygame.mouse.get_pos()
                 if 90 <= x <= 90 + 419:
                     if 312 <= y <= 312 + 58:
-                        self.controller.depth = 2
+                        self.controller.depth = 1
                     elif 406 <= y <= 406 + 58:
-                        self.controller.depth = 4
+                        self.controller.depth = 3
                     elif 500 <= y <= 500 + 58:
-                        self.controller.depth = 6
+                        self.controller.depth = 5
                     elif 594 <= y <= 594 + 58:
                         pygame.quit()
                         exit()

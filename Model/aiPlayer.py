@@ -29,13 +29,13 @@ class AIPlayer(Player):
             return alpha
         else:
             if moves == []:
-                if beta < self.minimax(1 - turn, board, alpha, beta, depth + 1):
+                if beta > self.minimax(1 - turn, board, alpha, beta, depth + 1):
                     beta = self.minimax(1 - turn, board, alpha, beta, depth + 1)
             for [x, y] in moves:
                 if alpha >= beta:
                     break
                 new_board = board.update(turn, x, y)
-                if beta < self.minimax(1 - turn, new_board, alpha, beta, depth + 1):
+                if beta > self.minimax(1 - turn, new_board, alpha, beta, depth + 1):
                     if depth == 0:
                         self.move = [x, y]
                     beta = self.minimax(1 - turn, new_board, alpha, beta, depth + 1)
