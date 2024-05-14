@@ -1,4 +1,6 @@
 from Model.player import Player
+
+
 class AIPlayer(Player):
     def __init__(self, name, depth):
         super().__init__(name)
@@ -10,7 +12,7 @@ class AIPlayer(Player):
 
     def minimax(self, turn, board, alpha, beta, depth):
         if depth == self.depth or (board.get_moves(turn) == [] and board.get_moves(1 - turn) == []):
-            return board.utility()[0]-board.utility()[1]
+            return board.utility()[0] - board.utility()[1]
         moves = board.get_moves(turn)
         if turn == 0:
             if moves == []:
