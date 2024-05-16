@@ -35,9 +35,11 @@ class Controller:
     def main(self):
         self.init_board()
         self.GUI.draw_start_menu()
-
         while True:
+            print('controller flag before events: ', self.flag)
             self.GUI.handle_events()
+            print('controller flag after events: ', self.flag)
+
             # show start menu if game not started
             if self.flag == 0:
                 self.GUI.draw_start_menu()

@@ -28,7 +28,7 @@ class GUI:
 
     def __init__(self, controller):
         pygame.init()
-        pygame.display.set_caption('Othello Game')
+        pygame.display.set_caption("Othello Game")
         self.screen = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
         self.converter()
         self.clock = pygame.time.Clock()
@@ -50,23 +50,32 @@ class GUI:
         self.PLAY_AGAIN = self.PLAY_AGAIN.convert_alpha()
 
     def draw_board(self):
+        print("draw")
         self.screen.blit(self.BG_IMG, (0, 0))
         for i in range(8):
             for j in range(8):
                 if self.controller.board.board[i][j] == 1:
-                    self.screen.blit(self.BLACK_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL))
+                    self.screen.blit(
+                        self.BLACK_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL)
+                    )
                 elif self.controller.board.board[i][j] == 2:
-                    self.screen.blit(self.WHITE_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL))
+                    self.screen.blit(
+                        self.WHITE_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL)
+                    )
                 elif self.controller.board.board[i][j] == 3:
-                    self.screen.blit(self.EMPTY_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL))
+                    self.screen.blit(
+                        self.EMPTY_PIECE, (j * self.CELL, self.SHIFT + i * self.CELL)
+                    )
 
-        font = pygame.font.Font('freesansbold.ttf', 27)
-        text = font.render(str(self.controller.board.utility()[0]), True, (255, 255, 255))
+        font = pygame.font.Font("freesansbold.ttf", 27)
+        text = font.render(
+            str(self.controller.board.utility()[0]), True, (255, 255, 255)
+        )
         text_Rect = text.get_rect()
         text_Rect.center = (150, 750)
         self.screen.blit(text, text_Rect)
 
-        font = pygame.font.Font('freesansbold.ttf', 27)
+        font = pygame.font.Font("freesansbold.ttf", 27)
         text = font.render(str(self.controller.board.utility()[1]), True, (0, 0, 0))
         text_Rect = text.get_rect()
         text_Rect.center = (450, 750)
@@ -94,12 +103,6 @@ class GUI:
                     if self.controller.board.valid_cell(1, x, y):
                         self.controller.board = self.controller.board.update(1, x, y)
                         self.controller.turn = 0
-            if event.type == pygame.MOUSEBUTTONDOWN and self.controller.flag == 2:
-                x, y = pygame.mouse.get_pos()
-                if 414 <= x <= 414 + 156 and 720 <= y <= 720 + 44:
-                    self.controller.init_board()
-                    self.controller.turn = 1
-                    self.controller.flag = 0
             if event.type == pygame.MOUSEBUTTONDOWN and self.controller.flag == 0:
                 x, y = pygame.mouse.get_pos()
                 if 90 <= x <= 90 + 419:
@@ -114,6 +117,13 @@ class GUI:
                         exit()
                     self.controller.ai = AIPlayer("Shahd", self.controller.depth)
                     self.controller.flag = 1
+            if event.type == pygame.MOUSEBUTTONDOWN and self.controller.flag == 2:
+                x, y = pygame.mouse.get_pos()
+                if 414 <= x <= 414 + 156 and 720 <= y <= 720 + 44:
+                    self.controller.init_board()
+                    self.controller.turn = 1
+                    self.controller.flag = 0
+                    print("controller flag: ", self.controller.flag)
 
     def draw_winner(self):
         if self.controller.board.utility()[0] > self.controller.board.utility()[1]:
@@ -129,6 +139,3 @@ class GUI:
     def pygame_update(self):
         pygame.display.update()
         self.clock.tick(60)
-
-
-
