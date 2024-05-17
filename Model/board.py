@@ -56,7 +56,8 @@ class Board:
                 if self.board[i][j] == 3:
                     self.board[i][j] = 0
                 if self.valid_cell(turn, i, j):
-                    self.board[i][j] = 3
+                    if turn == 1:
+                        self.board[i][j] = 3
                     moves.append([i, j])
         return moves
 

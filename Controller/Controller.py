@@ -2,6 +2,7 @@ from Model.player import Player
 from Model.aiPlayer import AIPlayer
 from Model.board import Board
 from View.GUI import GUI
+import time
 
 
 class Controller:
@@ -36,10 +37,8 @@ class Controller:
         self.init_board()
         self.GUI.draw_start_menu()
         while True:
-            print('controller flag before events: ', self.flag)
             self.GUI.handle_events()
-            print('controller flag after events: ', self.flag)
-
+            print(self.board.white, self.board.black)
             # show start menu if game not started
             if self.flag == 0:
                 self.GUI.draw_start_menu()
@@ -47,17 +46,30 @@ class Controller:
             # if game started draw board and handle moves
             if self.flag == 1:
                 self.GUI.draw_board()
+                self.GUI.pygame_update()
                 if len(self.board.get_moves(self.turn)) == 0:
                     self.turn = 1 - self.turn
                 if self.turn == 0:
                     self.ai.get_move(self.board)
+                    self.GUI.draw_board()
+                    self.GUI.pygame_update()
                     self.board = self.board.update(0, self.ai.move[0], self.ai.move[1])
+                    time.sleep(0.5)
+                    self.GUI.draw_board()
+                    self.GUI.pygame_update()
                     self.turn = 1
                 if self.turn == 1:
                     self.board.get_moves(1)
                 # if there is no valid move end the game (by setting flag to 2) and draw the winner
-                if (len(self.board.get_moves(self.turn)) == 0 and len(
-                        self.board.get_moves(1 - self.turn)) == 0) or self.board.white == 30 or self.board.black == 30:
+                if (
+                    len(self.board.get_moves(self.turn)) == 0
+                    and len(self.board.get_moves(1 - self.turn)) == 0
+                ):
+                    print("end game: ")
+                    print(self.board.white, self.board.black)
+                    print(self.turn, ": ", len(self.board.get_moves(self.turn)))
+                    print(self.turn, ": ", len(self.board.get_moves(1 - self.turn)))
+                    print(self.board.board)
                     self.GUI.draw_winner()
                     self.GUI.draw_play_again()
                     self.flag = 2

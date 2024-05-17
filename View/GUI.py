@@ -94,7 +94,11 @@ class GUI:
             if event.type == pygame.QUIT:
                 pygame.quit()
                 exit()
-            if event.type == MOUSEBUTTONDOWN and self.controller.turn == 1:
+            if (
+                event.type == MOUSEBUTTONDOWN
+                and self.controller.flag == 1
+                and self.controller.turn == 1
+            ):
                 x, y = pygame.mouse.get_pos()
                 if 100 <= y <= 700:
                     x = x // self.CELL
